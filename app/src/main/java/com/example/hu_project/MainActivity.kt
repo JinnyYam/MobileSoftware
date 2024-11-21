@@ -25,8 +25,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         // Toolbar 설정
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        setSupportActionBar(binding.toolbar)
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         // 하단 메뉴바
         setBottomNavigationView()
 

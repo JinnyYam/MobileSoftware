@@ -20,22 +20,55 @@
             android:layout_height="wrap_content">
 
             <!-- Toolbar -->
-            <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height"
-            android:background="?attr/colorPrimary"
-            android:theme="?attr/actionBarTheme"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+<!--            <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/toolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="@dimen/toolbar_height"-->
+<!--            android:background="?attr/colorPrimary"-->
+<!--            android:theme="?attr/actionBarTheme"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"/>-->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/logoBar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolbar_height"
+                android:padding="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/logoImage"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:src="@mipmap/ic_launcher"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"/>-->
+
+                <TextView
+                    android:id="@+id/appName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:gravity="center"
+                    android:text="향 유"
+                    android:textColor="@color/sky_blue"
+                    android:textStyle="bold"
+                    android:textSize="30sp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <!-- Category: Playlist -->
             <TextView
             android:id="@+id/playlistLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintTop_toBottomOf="@id/logoBar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:paddingTop="10dp"
@@ -51,7 +84,7 @@
             app:layout_constraintTop_toBottomOf="@id/playlistLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             tools:listitem="@layout/item_post"/>
 
             <!-- Category: Eat -->
@@ -75,7 +108,7 @@
             app:layout_constraintTop_toBottomOf="@id/eatLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             tools:listitem="@layout/item_post"/>
 
             <!-- Category: Look -->
@@ -99,7 +132,7 @@
             app:layout_constraintTop_toBottomOf="@id/lookLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             tools:listitem="@layout/item_post"/>
 
             <!-- Category: Place -->
@@ -123,7 +156,7 @@
             app:layout_constraintTop_toBottomOf="@id/placeLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             tools:listitem="@layout/item_post"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
