@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.hu_project"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.hu_project"
@@ -48,4 +48,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    // Glide 등록
+    implementation("com.github.bumptech.glide:glide:4.13.2")
 }
