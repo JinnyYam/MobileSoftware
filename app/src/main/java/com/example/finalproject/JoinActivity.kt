@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.finalproject.databinding.ActivityJoinBinding
 import com.example.finalproject.databinding.ActivityLoginBinding
+import com.example.finalproject.member.MemberRepository
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.delay
@@ -23,6 +24,7 @@ class JoinActivity : AppCompatActivity() {
         ActivityJoinBinding.inflate(layoutInflater)
     }
     private lateinit var launcher: ActivityResultLauncher<Intent>
+    private lateinit var memberRepository: MemberRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +46,12 @@ class JoinActivity : AppCompatActivity() {
                         putExtra("ID", id)
                         putExtra("PW", pw)
                     }
+                    // 데이터 추가
+                    val memberId = memberRepository.addMember(id, , "john.doe@example.com")
+                    println("Added member with ID: $memberId")
 
-                    setResult(Activity.RESULT_OK, resultIntent) // 결과 설정
+                    // 결과 설정
+                    setResult(Activity.RESULT_OK, resultIntent)
                     finish() // JoinActivity 종료
                 }
 
