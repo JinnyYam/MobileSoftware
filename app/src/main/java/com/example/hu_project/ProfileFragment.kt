@@ -45,7 +45,12 @@ class ProfileFragment : Fragment() {
 
     private fun setupHorizontalRecyclerView(recyclerView: RecyclerView, posts: List<main_data.Post>) {
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = HorizontalPostAdapter(posts)
+        val adapter = HorizontalPostAdapter(posts){ post ->
+            // 게시글 클릭 시 상세 게시글 보기로 이동
+            val action = ProfileFragmentDirections.actionProfileFragmentToPostDetailFragment(post)
+            findNavController().navigate(action)
+        }
+        recyclerView.adapter = adapter
     }
 
     private fun createDummyPosts(category: String): List<main_data.Post> {
