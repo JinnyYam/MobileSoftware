@@ -19,6 +19,7 @@ class HorizontalPostAdapter(
     class PostViewHolder(val binding: ItemPostBinding) :
         RecyclerView.ViewHolder(binding.root)
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PostViewHolder(binding)

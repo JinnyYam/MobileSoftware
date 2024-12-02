@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hu_project.adapter.HorizontalPostAdapter
@@ -16,8 +17,6 @@ class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var adapter: HorizontalPostAdapter // 게시글 recyclerView 어댑터
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,10 +46,16 @@ class ProfileFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         val adapter = HorizontalPostAdapter(posts){ post ->
             // 게시글 클릭 시 상세 게시글 보기로 이동
-            val action = ProfileFragmentDirections.actionProfileFragmentToPostDetailFragment(post)
-            findNavController().navigate(action)
+            navigationToPostDetailFragment(post)
         }
         recyclerView.adapter = adapter
+    }
+
+    private fun navigationToPostDetailFragment(post: main_data.Post){
+        val bundle = Bundle().apply {
+            putParcelable("post", post) // post data 전달
+        }
+        findNavController().navigate(R.id.action_profileFragment_to_postDetailFragment, bundle)
     }
 
     private fun createDummyPosts(category: String): List<main_data.Post> {

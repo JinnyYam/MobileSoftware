@@ -4,11 +4,11 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 class main_data {
-
+    @Parcelize
     data class Post(
         val title:String,
         val imageUrl: String
-    ) : java.io.Serializable
+    ) : Parcelable
 
     data class Comment(val author: String, val content: String)
 }

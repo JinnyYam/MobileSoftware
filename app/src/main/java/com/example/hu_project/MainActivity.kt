@@ -49,11 +49,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupHorizontalRecyclerView(recyclerView: RecyclerView, posts: List<main_data.Post>) {
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = HorizontalPostAdapter(posts)
+        recyclerView.adapter = HorizontalPostAdapter(posts) { post ->
+            // 클릭 시 상세 페이지로 이동
+            val fragment = DetailPostFragment()
+            val args = Bundle().apply {
+                putParcelable("post", post)
+            }
+            fragment.arguments = args
+
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     private fun createDummyPosts(category: String): List<main_data.Post> {
-        return List(4) { index ->
+        return List(5) { index ->
             main_data.Post(
                 title = "$category Title $index",
                 imageUrl = "@drawable/whale"
