@@ -1,59 +1,81 @@
 package com.example.hu_project
 
+import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.navigation.ActivityNavigatorExtras
+import com.example.hu_project.databinding.FragmentPostingBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [PostingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PostingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var selectedTextView: TextView? = null
+    private var _binding: FragmentPostingBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_posting, container, false)
+        _binding = FragmentPostingBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PostingFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PostingFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Add Image Button Click
+        binding.addImageButton.setOnClickListener {
+            openGallery()
+        }
+
+        // Category selection logic
+        binding.categoryPlaylist.setOnClickListener { toggleSelection(binding.categoryPlaylist) }
+        binding.categoryEat.setOnClickListener { toggleSelection(binding.categoryEat) }
+        binding.categoryLook.setOnClickListener { toggleSelection(binding.categoryLook) }
+        binding.categoryPlace.setOnClickListener { toggleSelection(binding.categoryPlace) }
+    }
+
+    private fun toggleSelection(selectedTextView: TextView) {
+        this.selectedTextView?.setBackgroundColor(Color.TRANSPARENT)
+
+        if (this.selectedTextView == selectedTextView) {
+            this.selectedTextView = null
+        } else {
+            selectedTextView.setBackgroundColor(
+                ContextCompat.getColor(requireContext(), R.color.sky_blue)
+            )
+            this.selectedTextView = selectedTextView
+        }
+    }
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK).apply { type = "image/*" }
+        galleryLauncher.launch(intent)
+    }
+
+    private val galleryLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if(result.resultCode == AppCompatActivity.RESULT_OK && result.data != null) {
+                val imageUri: Uri? = result.data?.data
+                if(imageUri != null) {
+                    binding.postImage.setImageURI((imageUri))
+                } else {
+                    Toast.makeText(requireContext(), "이미지를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

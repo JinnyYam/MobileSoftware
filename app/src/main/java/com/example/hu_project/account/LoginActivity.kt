@@ -7,6 +7,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hu_project.HomeFragment
+import com.example.hu_project.MainActivity
 import com.example.hu_project.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -26,10 +27,11 @@ class LoginActivity : AppCompatActivity() {
             val pw = binding.pwEditText.text.toString()
 
             if(id.isNotEmpty() && pw.isNotEmpty()) {
-                val homeIntent = Intent(this, HomeFragment::class.java)
+                val homeIntent = Intent(this, MainActivity::class.java)
                 homeIntent.putExtra("ID", id)
                 homeIntent.putExtra("PW", pw)
                 startActivity(homeIntent)
+                finish()    // 현재 로그인 화면 종료
             } else {
                 Toast.makeText(this, "아아디와 비밀번호를 입력하세요", Toast.LENGTH_SHORT).show()
             }

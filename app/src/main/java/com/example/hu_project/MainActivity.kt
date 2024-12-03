@@ -1,77 +1,71 @@
 package com.example.hu_project
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.LayoutInflaterCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.hu_project.adapter.HorizontalPostAdapter
 import com.example.hu_project.databinding.ActivityMainBinding
-import com.example.hu_project.model.main_data
+import com.example.hu_project.profile.ProfileFragment
 
 class MainActivity : AppCompatActivity() {
 
-    val binding : ActivityMainBinding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
-    }
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        // Toolbar 설정
-//        setSupportActionBar(binding.toolbar)
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        // 하단 메뉴바
-        setBottomNavigationView()
 
-        if(savedInstanceState == null){
-            binding.bottomNavigationView.selectedItemId = R.id.fragment_home
-        }
-
-        // 더미 데이터
-        val playlistData = createDummyPosts("Song")
-        val eatData = createDummyPosts("Food")
-        val lookData = createDummyPosts("Look")
-        val placeData = createDummyPosts("Place")
-
-        // category 에 RecyclerView 연결
-        setupHorizontalRecyclerView(binding.playlistRecyclerView, playlistData)
-        setupHorizontalRecyclerView(binding.eatRecyclerView, eatData)
-        setupHorizontalRecyclerView(binding.lookRecyclerView, lookData)
-        setupHorizontalRecyclerView(binding.placeRecyclerView, placeData)
-    }
-
-    private fun setupHorizontalRecyclerView(recyclerView: RecyclerView, posts: List<main_data.Post>) {
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = HorizontalPostAdapter(posts) { post ->
-            // 클릭 시 상세 페이지로 이동
-            val fragment = DetailPostFragment()
-            val args = Bundle().apply {
-                putParcelable("post", post)
-            }
-            fragment.arguments = args
-
+        // 초기 탭 설정
+        if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.main, fragment)
-                .addToBackStack(null)
+                .replace(R.id.main, HomeFragment())
                 .commit()
         }
+        // 하단 메뉴바
+        setBottomNavigationView()
     }
-
-    private fun createDummyPosts(category: String): List<main_data.Post> {
-        return List(5) { index ->
-            main_data.Post(
-                title = "$category Title $index",
-                imageUrl = "@drawable/whale"
-            )
-        }
-    }
+//
+//        if(savedInstanceState == null){
+//            binding.bottomNavigationView.selectedItemId = R.id.fragment_home
+//        }
+//
+//        // 더미 데이터
+//        val playlistData = createDummyPosts("Song")
+//        val eatData = createDummyPosts("Food")
+//        val lookData = createDummyPosts("Look")
+//        val placeData = createDummyPosts("Place")
+//
+//        // category 에 RecyclerView 연결
+//        setupHorizontalRecyclerView(binding.playlistRecyclerView, playlistData)
+//        setupHorizontalRecyclerView(binding.eatRecyclerView, eatData)
+//        setupHorizontalRecyclerView(binding.lookRecyclerView, lookData)
+//        setupHorizontalRecyclerView(binding.placeRecyclerView, placeData)
+//    }
+//
+//    private fun setupHorizontalRecyclerView(recyclerView: RecyclerView, posts: List<main_data.Post>) {
+//        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+//        recyclerView.adapter = HorizontalPostAdapter(posts) { post ->
+//            // 클릭 시 상세 페이지로 이동
+//            val fragment = DetailPostFragment()
+//            val args = Bundle().apply {
+//                putParcelable("post", post)
+//            }
+//            fragment.arguments = args
+//
+//            supportFragmentManager.beginTransaction()
+//                .replace(R.id.main, fragment)
+//                .addToBackStack(null)
+//                .commit()
+//        }
+//    }
+//
+//    private fun createDummyPosts(category: String): List<main_data.Post> {
+//        return List(5) { index ->
+//            main_data.Post(
+//                title = "$category Title $index",
+//                imageUrl = "@drawable/whale"
+//            )
+//        }
+//    }
 
     fun setBottomNavigationView() {
         binding.bottomNavigationView.setOnItemSelectedListener { item ->

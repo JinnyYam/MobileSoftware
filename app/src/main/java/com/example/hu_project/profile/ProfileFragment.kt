@@ -1,5 +1,6 @@
-package com.example.hu_project
+package com.example.hu_project.profile
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,10 +9,11 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hu_project.DetailPostFragment
+import com.example.hu_project.R
 import com.example.hu_project.adapter.HorizontalPostAdapter
 import com.example.hu_project.databinding.FragmentProfileBinding
 import com.example.hu_project.model.main_data
-import com.google.android.material.tabs.TabLayout
 
 class ProfileFragment : Fragment() {
 
@@ -28,6 +30,12 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Image Button 클릭 시 프로필 수정 화면
+        binding.profileModifyBtn.setOnClickListener{
+            val intent = Intent(requireContext(), EditProfileActivity::class.java)
+            startActivity(intent)
+        }
 
         // 더미 데이터
         val playlistData = createDummyPosts("Playlist")

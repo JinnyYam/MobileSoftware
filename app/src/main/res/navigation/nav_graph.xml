@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.hu_project.ProfileFragment">
+        android:name="com.example.hu_project.profile.ProfileFragment">
         <action
             android:id="@+id/action_profileFragment_to_postDetailFragment"
             app:destination="@id/postDetailFragment" />
