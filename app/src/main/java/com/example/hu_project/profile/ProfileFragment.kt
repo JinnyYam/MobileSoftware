@@ -6,14 +6,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hu_project.DetailPostFragment
 import com.example.hu_project.R
+import com.example.hu_project.account.MapsActivity
 import com.example.hu_project.adapter.HorizontalPostAdapter
 import com.example.hu_project.databinding.FragmentProfileBinding
 import com.example.hu_project.model.main_data
+import com.google.android.material.tabs.TabLayout
 
 class ProfileFragment : Fragment() {
 
@@ -25,7 +30,37 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
+
+        setupTabLayout()
+
         return binding.root
+    }
+
+    private fun setupTabLayout() {
+        binding.tabLayout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when(tab?.text) {
+                    "CONTENTS" -> {
+                        Toast.makeText(requireContext(), "CONTENTS 선택", Toast.LENGTH_SHORT).show()
+                    }
+
+                    "MAP" -> {
+                        // MAP 탭이 선택되었을 때 MapsActivity로 이동
+                        val intent = Intent(requireContext(), MapsActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                // 탭 선택이 해제되었을 때
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                // 이미 선택된 탭이 다시 선택되었을 때
+            }
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
