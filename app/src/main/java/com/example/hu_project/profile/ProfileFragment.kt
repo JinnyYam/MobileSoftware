@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat.startActivity
@@ -19,11 +20,17 @@ import com.example.hu_project.adapter.HorizontalPostAdapter
 import com.example.hu_project.databinding.FragmentProfileBinding
 import com.example.hu_project.model.main_data
 import com.google.android.material.tabs.TabLayout
+import org.w3c.dom.Text
 
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+
+    // 더미 팔로잉 및 팔로워 리스트
+    private val followingList = mutableListOf("Alice", "Bob", "Charlie")
+    private val followerList = mutableListOf("David", "Eve", "Frank")
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +39,8 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         setupTabLayout()
+        setupFollowClickListeners()
+        updateFollowCounts()
 
         return binding.root
     }
@@ -62,6 +71,31 @@ class ProfileFragment : Fragment() {
             }
         })
     }
+
+    private fun setupFollowClickListeners(){
+        binding.profileFollow.findViewById<TextView>(R.id.following).setOnClickListener {
+            val intent = Intent(requireContext(), FriendListActivity::class.java).apply {
+                putExtra("title", "Following")
+                putStringArrayListExtra("friendList", ArrayList(followingList))
+            }
+            startActivity(intent)
+        }
+
+        binding.profileFollow.findViewById<TextView>(R.id.follower).setOnClickListener {
+            val intent = Intent(requireContext(), FriendListActivity::class.java).apply {
+                putExtra("title", "Followers")
+                putStringArrayListExtra("friendList", ArrayList(followerList))
+            }
+            startActivity(intent)
+        }
+    }
+    private fun updateFollowCounts() {
+        binding.profileFollow.findViewById<TextView>(R.id.following).text =
+            "following ${followingList.size}"
+        binding.profileFollow.findViewById<TextView>(R.id.follower).text =
+            "follower ${followerList.size}"
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
